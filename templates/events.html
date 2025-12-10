@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>경기 일정 관리</h1>
+    <p>레알 일렉트론 풋살/축구 일정을 관리하는 페이지입니다.</p>
+
+    <a class="btn" href="/">⬅ 메인으로 돌아가기</a>
+    <a class="btn secondary" href="/events/new" style="margin-left:8px;">+ 일정 추가</a>
+
+    <hr>
+
+    {% if events %}
+        <table style="width:100%; border-collapse: collapse; margin-top:16px;">
+            <thead>
+                <tr style="background-color:#e5e7eb;">
+                    <th style="border:1px solid #d1d5db; padding:8px;">제목</th>
+                    <th style="border:1px solid #d1d5db; padding:8px;">날짜/시간</th>
+                    <th style="border:1px solid #d1d5db; padding:8px;">장소</th>
+                    <th style="border:1px solid #d1d5db; padding:8px;">상세</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in events %}
+                <tr>
+                    <td style="border:1px solid #e5e7eb; padding:8px;">{{ e.title }}</td>
+                    <td style="border:1px solid #e5e7eb; padding:8px;">{{ e.date or "-" }}</td>
+                    <td style="border:1px solid #e5e7eb; padding:8px;">{{ e.place or "-" }}</td>
+                    <td style="border:1px solid #e5e7eb; padding:8px; text-align:center;">
+                        <a href="/events/{{ e.id }}">보기</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="margin-top:12px;">등록된 일정이 없습니다. 위의 <strong>일정 추가</strong> 버튼을 눌러 새 일정을 만들어 주세요.</p>
+    {% endif %}
+{% endblock %}

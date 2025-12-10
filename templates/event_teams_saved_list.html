@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>📂 저장된 팀 목록</h2>
+
+<p><strong>이벤트:</strong> {{ event.title }}</p>
+
+{% if sets|length == 0 %}
+    <p>아직 저장된 팀이 없습니다.</p>
+{% else %}
+    <ul>
+    {% for s in sets %}
+        <li style="margin-bottom:10px;">
+            <a href="/events/{{ event.id }}/teams/saved/{{ s.id }}">
+                🧩 팀 세트 #{{ s.id }} ({{ s.created_at }})
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+<a href="/events/{{ event.id }}/teams" class="btn secondary">← 팀 생성 화면으로 돌아가기</a>
+{% endblock %}

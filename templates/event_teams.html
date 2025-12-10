@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>경기별 팀 자동 배정</h1>
+
+    <a class="btn" href="/events/{{ event.id }}">⬅ 경기 상세로 돌아가기</a>
+    <a class="btn secondary" href="/events" style="margin-left:8px;">일정 목록</a>
+
+    <hr>
+
+   <h2>⚽ 팀 나누기</h2>
+	<div style="margin-bottom: 15px;">
+    		<a href="/events/{{ event.id }}/teams/saved" class="btn">
+      	  		📂 저장된 팀 목록 보기
+    		</a>
+		<a href="/events/{{ event.id }}/teams/graph" class="btn" style="margin-top:10px;">
+    📊 그래프로 보기
+</a>
+
+	</div>
+
+    <p><strong>날짜/시간:</strong> {{ event.date or "-" }}</p>
+    <p><strong>장소:</strong> {{ event.place or "-" }}</p>
+
+    <hr>
+
+    {% if not attendees %}
+        <p>이 경기에서 <strong>참석(yes)</strong>으로 표시된 부원이 없습니다.</p>
+        <p>먼저 <a href="/events/{{ event.id }}">경기 상세 페이지</a>에서 참석 여부를 설정해 주세요.</p>
+    {% else %}
+        <h3>참석자 ({{ attendees|length }}명)</h3>
+        <ul>
+            {% for m in attendees %}
+                <li>
+                    {{ m.name }} ({{ m.position or "포지션 없음" }}, 실력 {{ m.skill or 0 }})
+                </li>
+            {% endfor %}
+        </ul>
+
+        <hr>
+
+        <form method="post" action="/events/{{ event.id }}/teams" style="margin-top:12px; margin-bottom:16px;">
+            <label>팀 개수 선택</label><br>
+            <select name="team_count"
+                    style="padding:8px; border-radius:8px; border:1px solid #d1d5db; margin-top:4px;">
+                <option value="2">2팀</option>
+                <option value="3">3팀</option>
+            </select>
+            <button type="submit" class="btn" style="margin-left:8px;">팀 배정하기</button>
+        </form>
+
+        {% if teams %}
+            <h3>배정 결과</h3>
+
+            <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
+                {% for team in teams %}
+                    <div style="flex:1 1 250px; border:1px solid #e5e7eb; border-radius:12px; padding:16px; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+                        <h4>팀 {{ loop.index }}</h4>
+                        <p style="font-size:14px; color:#6b7280;">
+                            총 실력 합: {{ team.total_skill }}
+                            (인원 {{ team.members|length }}명)
+                        </p>
+                        <ul>
+                            {% for m in team.members %}
+                                <li>
+                                    {{ m.name }}
+                                    ({{ m.position or "포지션 없음" }}, 실력 {{ m.skill or 0 }})
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="margin-top:8px; color:#6b7280;">
+                팀 배정을 하려면 위에서 팀 개수를 선택하고 버튼을 눌러 주세요.
+            </p>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+<form method="post" action="/events/{{ event.id }}/teams/save" style="margin-top:8px;">
+    <input type="hidden" name="team_count" value="2" id="save_team_count_input">
+    <button type="submit" class="btn secondary" style="margin-left:8px;">이 결과 저장하기</button>
+</form>
+
+<script>
+    (function(){
+        const select = document.querySelector('form[action="/events/{{ event.id }}/teams"] select[name="team_count"]');
+        const saveInput = document.getElementById('save_team_count_input');
+        if(select && saveInput){
+            select.addEventListener('change', ()=>{ saveInput.value = select.value; });
+            saveInput.value = select.value;
+        }
+    })();
+</script>

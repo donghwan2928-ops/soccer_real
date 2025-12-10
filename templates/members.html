@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>부원 목록</h1>
+    <p>레알 일렉트론 부원 정보를 간단히 정리한 페이지입니다.</p>
+
+   <a class="btn" href="/">⬅ 메인으로 돌아가기</a>
+<a class="btn secondary" href="/members/new" style="margin-left:8px;">+ 부원 추가</a>
+
+    <hr>
+
+    <table style="width:100%; border-collapse: collapse; margin-top:16px;">
+        <thead>
+            <tr style="background-color:#e5e7eb;">
+                <th style="border:1px solid #d1d5db; padding:8px;">번호</th>
+                <th style="border:1px solid #d1d5db; padding:8px;">이름</th>
+                <th style="border:1px solid #d1d5db; padding:8px;">포지션</th>
+                <th style="border:1px solid #d1d5db; padding:8px;">실력(1~5)</th>
+                <th style="border:1px solid #d1d5db; padding:8px;">전화번호</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in members %}
+            <tr>
+                <td style="border:1px solid #e5e7eb; padding:8px; text-align:center;">{{ m.id }}</td>
+                <td style="border:1px solid #e5e7eb; padding:8px;">{{ m.name }}</td>
+                <td style="border:1px solid #e5e7eb; padding:8px; text-align:center;">{{ m.position }}</td>
+                <td style="border:1px solid #e5e7eb; padding:8px; text-align:center;">{{ m.skill }}</td>
+                <td style="border:1px solid #e5e7eb; padding:8px;">{{ m.phone }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

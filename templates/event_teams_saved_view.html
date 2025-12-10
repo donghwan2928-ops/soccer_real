@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>🧩 저장된 팀 구성</h2>
+
+<p><strong>이벤트:</strong> {{ event.title }}</p>
+<p><strong>세트 번호:</strong> {{ set_id }}</p>
+
+<hr>
+
+{% for team in teams %}
+    <div style="margin-bottom:20px;">
+        <h3>팀 {{ loop.index }}</h3>
+        <p>총 실력 점수: {{ team.total_skill }}</p>
+        <ul>
+            {% for member in team.members %}
+                <li>
+                    {{ member.name }} (점수: {{ member.skill }})
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <hr>
+{% endfor %}
+
+<a href="/events/{{ event.id }}/teams/saved" class="btn secondary">← 저장된 목록으로</a>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>📊 팀 밸런스 그래프</h2>
+
+<img src="data:image/png;base64,{{ image }}" style="max-width:100%;"/>
+
+<a href="/events" class="btn secondary">← 이벤트로 돌아가기</a>
+{% endblock %}

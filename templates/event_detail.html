@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>경기 일정 상세</h1>
+
+<a class="btn" href="/events">⬅ 일정 목록으로</a>
+<a class="btn secondary" href="/events/{{ event.id }}/teams" style="margin-left:8px;">
+    이 경기 참석자 팀 배정
+</a>
+
+    <hr>
+
+    <h2>{{ event.title }}</h2>
+    <p><strong>날짜/시간:</strong> {{ event.date or "-" }}</p>
+    <p><strong>장소:</strong> {{ event.place or "-" }}</p>
+    {% if event.memo %}
+        <p><strong>메모:</strong> {{ event.memo }}</p>
+    {% endif %}
+
+    <hr>
+
+    {% if not members %}
+        <p>등록된 부원이 없어 참석 투표를 할 수 없습니다. 먼저 <a href="/members/new">부원을 추가</a>해 주세요.</p>
+    {% else %}
+        <h3>참석 투표</h3>
+        <p style="font-size:14px; color:#6b7280;">각 부원 옆에서 참석 여부를 선택하고 저장 버튼을 눌러 주세요.</p>
+
+        {% for m in members %}
+        <form method="post" action="/events/{{ event.id }}/attendance"
+              style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+            <input type="hidden" name="member_id" value="{{ m.id }}">
+            <span style="width:140px;">{{ m.name }}</span>
+            <select name="status"
+                    style="padding:4px; border-radius:6px; border:1px solid #d1d5db;">
+                <option value="none"  {% if m.status == 'none' %}selected{% endif %}>선택 안 함</option>
+                <option value="yes"   {% if m.status == 'yes' %}selected{% endif %}>참석</option>
+                <option value="no"    {% if m.status == 'no' %}selected{% endif %}>불참</option>
+                <option value="maybe" {% if m.status == 'maybe' %}selected{% endif %}>미정</option>
+            </select>
+            <button type="submit" class="btn secondary" style="padding:4px 10px; font-size:12px;">저장</button>
+        </form>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

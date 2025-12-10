@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>레알 일렉트론 관리 서비스 (베타)</h1>
+    <p>동환이가 직접 만드는, 레알 전용 동아리 관리 페이지입니다 😎</p>
+
+    <hr>
+
+    <h2>지금 계획 중인 기능</h2>
+    <ul>
+        <li>✅ 부원 관리 (이름, 포지션, 실력, 연락처)</li>
+        <li>✅ 경기 일정 만들기 & 참석 / 불참 투표</li>
+        <li>✅ 팀 자동 배정 (실력 / 포지션 균형 맞추기)</li>
+        <li>⬜ 경기 결과 기록 (골 / 어시 / MOM)</li>
+        <li>⬜ 출석률 / 참여도 랭킹</li>
+        <li>⬜ 카톡 공지문 자동 생성</li>
+    </ul>
+
+    <p>지금은 <strong>기본 뼈대</strong>만 만들어둔 상태입니다.<br>
+       다음 단계에서 <strong>부원 관리 페이지</strong>를 붙일 거예요.</p>
+
+    <a class="btn" href="#">부원 관리 페이지</a>
+    <a class="btn secondary" href="/events" style="margin-left:8px;">경기 일정 관리</a>
+    <a class="btn secondary" href="#">팀 자동 배정</a>
+
+{% endblock %}

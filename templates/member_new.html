@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>부원 추가</h1>
+    <p>새로운 레알 일렉트론 부원 정보를 입력하세요.</p>
+
+    <a class="btn secondary" href="/members">⬅ 부원 목록으로 돌아가기</a>
+
+    <hr>
+
+    <form method="post" action="/members/new" style="margin-top:16px;">
+        <div style="margin-bottom:12px;">
+            <label>이름 (필수)</label><br>
+            <input type="text" name="name" required
+                   style="width:100%; padding:8px; border-radius:8px; border:1px solid #d1d5db;">
+        </div>
+
+        <div style="margin-bottom:12px;">
+            <label>포지션 (예: GK/DF/MF/FW)</label><br>
+            <input type="text" name="position"
+                   style="width:100%; padding:8px; border-radius:8px; border:1px solid #d1d5db;">
+        </div>
+
+        <div style="margin-bottom:12px;">
+            <label>실력 (1~5)</label><br>
+            <input type="number" name="skill" min="1" max="5" value="3"
+                   style="width:100%; padding:8px; border-radius:8px; border:1px solid #d1d5db;">
+        </div>
+
+        <div style="margin-bottom:12px;">
+            <label>전화번호</label><br>
+            <input type="text" name="phone"
+                   style="width:100%; padding:8px; border-radius:8px; border:1px solid #d1d5db;">
+        </div>
+
+        <button type="submit" class="btn">부원 추가하기</button>
+    </form>
+{% endblock %}
